@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逢甲大學學士後資訊工程專班課表</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #000000; /* 整個頁面背景為黑色 */
+            color: #FFFFFF; /* 預設文字顏色為白色 */
+        }
+
+        .navbar, .footer, .main-content {
+            background-color: #000000 !important; /* 物件背景為黑色 */
+            color: #FFFFFF; /* 文字顏色為白色 */
+            border: 1px solid #FFD700; /* 邊線為黃金色 */
+        }
+
+        .navbar .nav-link, .navbar .navbar-brand, .footer p {
+            color: #FFFFFF !important; /* 導航欄和頁腳文字顏色為白色 */
+        }
+
+        .navbar-toggler {
+            border-color: #FFFFFF !important; /* 將邊框顏色改為白色 */
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important; /* 將圖標顏色改為白色 */
+        }
+
+        .teacher_card {
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+            background-color: #000000; /* 物件背景為黑色 */
+            border: 1px solid #FFD700; /* 邊線為黃金色 */
+            border-radius: 8px;
+        }
+        .teacher_card img {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 300px;
+            transition: opacity 0.5s ease;
+        }
+        .teacher_card h5 {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #FFD700; /* 黃金色 */
+        }
+        .teacher_card .intro {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(76, 76, 76, 0.82); /* 深灰色 */
+            color: #FFFFFF; /* 白色 */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .teacher_card:hover img {
+            opacity: 0.2;
+        }
+        .teacher_card:hover .intro {
+            opacity: 1;
+        }
+        .course_intro {
+            border: 1px solid #FFD700; /* 黃金色 */
+            max-width: 800px;
+            margin: 10px;
+            background-color: #000000; /* 物件背景為黑色 */
+            color: #FFFFFF; /* 白色 */
+            border-radius: 8px;
+            text-align: center; /* 置中對齊 */
+            padding: 20px;
+        }
+        .course_intro h2 {
+            font-size: 1.5rem; /* 標題字小一點 */
+            color: #FFD700; /* 黃金色 */
+        }
+        .course_intro img {
+            width: 150px; /* 圖片大小調整 */
+            height: 150px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px; /* 置中並增加底部間距 */
+        }
+        .banner {
+            background-color: #000000; /* 物件背景為黑色 */
+            padding: 30px;
+            text-align: center;
+            font-size: large;
+            color: #FFD700; /* 黃金色 */
+            border: 1px solid #FFD700; /* 邊線為黃金色 */
+            border-radius: 8px;
+        }
+        .centered-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 課表中課程名稱和老師名字的樣式 */
+        .course-name {
+            text-align: center;
+            color: #00BFFF; /* 深藍色 */
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .teacher-name {
+            text-align: center;
+            color: #FFD700; /* 黃金色 */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header class="banner">
+    <h1>逢甲大學學士後資訊工程專班</h1>
+</header>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">課程選擇</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        選擇學期
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#" onclick="showTimetable('112-1')">112-1</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="showTimetable('112-2')">112-2</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="showTimetable('112-3')">112-3</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4 main-content">
+    <div class="row">
+        <div class="col-md-3">
+            <h2 class="centered-container">老師介紹</h2>
+            <div id="teacherCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active teacher_card" data-teacher="薛念林">
+                        <img src="https://www.iecs.fcu.edu.tw/media/img/teacher/avatar/IMG_2906.png" alt="薛念林老師">
+                        <div class="intro">介紹</div>
+                        <h5>薛念林老師</h5>
+                    </div>
+                    <div class="carousel-item teacher_card" data-teacher="李俊宏">
+                        <img src="https://www.iecs.fcu.edu.tw/media/img/teacher/avatar/IeonLee800X800.png" alt="李俊宏老師">
+                        <div class="intro">介紹</div>
+                        <h5>李俊宏老師</h5>
+                    </div>
+                    <div class="carousel-item teacher_card" data-teacher="陳錫民">
+                        <img src="https://www.iecs.fcu.edu.tw/media/img/teacher/avatar/pic_02423.jpg" alt="陳錫民老師">
+                        <div class="intro">介紹</div>
+                        <h5>陳錫民老師</h5>
+                    </div>
+                    <!-- More teacher items can be added here -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#teacherCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#teacherCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2 id="mainContentTitle" class="centered-container">我的112-1課表</h2>
+            <table class="table" id="timetable">
+                <thead>
+                <tr>
+                    <th>-</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 課表資料將在這裡填充 -->
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <h2 class="centered-container">課程介紹</h2>
+            <div id="courseInfo" class="course_intro">
+                <h2 class="course_title">選擇課程</h2>
+                <p>請點擊課表中的課程名稱以查看詳細介紹。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center mt-4 py-4 footer">
+    ©2024 逢甲大學 Feng Chia University
+</footer>
+
+<script>
+    const timetables = {
+        '112-1': [
+            ['App 開發', '賴璉錡', '資料結構與演算法', '李俊宏', 'App 開發', '賴璉錡', '資料庫與後端', '陳錫民', ''],
+            ['資料結構與演算法', '李俊宏', '進階網頁設計', '薛念林', '資料庫與後端', '陳錫民', '進階網頁設計', '薛念林', '']
+        ],
+        '112-2': [
+            // Similar structure with different data for 112-2
+        ],
+        '112-3': [
+            ['資料結構與演算法', '李俊宏', '進階網頁設計', '薛念林', '資料庫與後端', '陳錫民', '進階網頁設計', '薛念林', ''],
+            ['App 開發', '賴璉錡', '資料結構與演算法', '李俊宏', 'App 開發', '賴璉錡', '資料庫與後端', '陳錫民', '']
+        ]
+    };
+
+    function showTimetable(term) {
+        const tbody = document.querySelector('#timetable tbody');
+        tbody.innerHTML = '';
+        document.getElementById('mainContentTitle').innerText = `我的${term}課表`;
+
+        timetables[term].forEach((row, index) => {
+            const tr = document.createElement('tr');
+            const th = document.createElement('th');
+            th.textContent = index === 0 ? '9:10-12:00' : '1:10-4:00';
+            tr.appendChild(th);
+
+            for (let i = 0; i < row.length; i += 2) {
+                const td = document.createElement('td');
+                if (row[i]) {
+                    td.innerHTML = `<span class="course-name" onclick="showCourse('${row[i]}')">${row[i]}</span><br><span class="teacher-name" onclick="showTeacher('${row[i + 1]}')">${row[i + 1]}</span>`;
+                }
+                tr.appendChild(td);
+            }
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    const courses = {
+        'App 開發': {
+            img: 'https://picsum.photos/200?random=1',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit...',
+            grading: ['平時：40%', '期中考：30%', '期末考：30%']
+        },
+        '資料結構與演算法': {
+            img: 'https://picsum.photos/200?random=2',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit...',
+            grading: ['平時：40%', '期中考：30%', '期末考：30%']
+        },
+        '資料庫與後端': {
+            img: 'https://picsum.photos/200?random=3',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit...',
+            grading: ['平時：40%', '期中考：30%', '期末考：30%']
+        },
+        '進階網頁設計': {
+            img: 'https://picsum.photos/200?random=4',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit...',
+            grading: ['平時：40%', '期中考：30%', '期末考：30%']
+        }
+    };
+
+    const teachers = {
+        '薛念林': 0, // 對應 carousel 中薛念林老師的 index
+        '李俊宏': 1, // 對應 carousel 中李俊宏老師的 index
+        '陳錫民': 2, // 对应 carousel 中陳錫民老师的 index
+        '賴璉錡': 3 // 增加了賴璉錡老師的索引
+    };
+
+    function showCourse(courseName) {
+        const courseInfo = courses[courseName];
+        const courseInfoDiv = document.getElementById('courseInfo');
+        courseInfoDiv.innerHTML = `
+                <h2 class="course_title">${courseName}</h2>
+                <img src="${courseInfo.img}" alt="${courseName}">
+                <p>${courseInfo.desc}</p>
+                <ul>
+                    ${courseInfo.grading.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            `;
+    }
+
+    function showTeacher(teacherName) {
+        const carousel = document.querySelector('#teacherCarousel');
+        const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carousel);
+        carouselInstance.to(teachers[teacherName]);
+    }
+
+    // Default timetable
+    showTimetable('112-1');
+</script>
+</body>
+</html>
